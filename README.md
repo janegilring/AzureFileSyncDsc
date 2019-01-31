@@ -8,6 +8,8 @@ This project has adopted [this code of conduct](CODE_OF_CONDUCT.md).
 
 ### master
 
+[![Build Status](https://dev.azure.com/janegilring/AzureFileSyncDsc/_apis/build/status/janegilring.AzureFileSyncDsc?branchName=master)](https://dev.azure.com/janegilring/AzureFileSyncDsc/_build/latest?definitionId=3?branchName=master)
+
 This is the branch containing the latest release -
 no contributions should be made directly to this branch.
 
@@ -38,7 +40,7 @@ This resource can be used to install and configure the Azure File Sync agent on 
 
 #### AzureFileSyncAgent Examples
 
-- [Install Azure File Sync Agent](/Examples/Resources/AzureFileSyncAgent/1 - AzureFileSyncAgent.ps1)
+- [Install Azure File Sync Agent](https://github.com/janegilring/AzureFileSyncDsc/blob/master/Examples/Resources/AzureFileSyncAgent/1%20-%20AzureFileSyncAgent.ps1)
 
 ### AzureFileSyncServerEndpoint
 
@@ -56,4 +58,4 @@ This resource can be used to create an Azure File Sync Server Endpoint in Azure.
 
 #### AzureFileSyncServerEndpoint Examples
 
-- [Install Azure File Sync Agent](/Examples/Resources/AzureFileSyncServerEndpoint/1 - AzureFileSyncServerEndpoint.ps1)
+- [Register Azure FileSync Server Endpoint](https://github.com/janegilring/AzureFileSyncDsc/blob/master/Examples/Resources/AzureFileSyncServerEndpoint/1%20-%20AzureFileSyncServerEndpoint.ps1)
