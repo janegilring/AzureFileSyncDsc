@@ -16,7 +16,7 @@ steps:
     scriptFolder: '$(System.DefaultWorkingDirectory)\tests\*'
     additionalModulePath: '$(Build.ArtifactStagingDirectory)'
     resultsFile: '$(Common.TestResultsDirectory)\Test-$(Build.DefinitionName)_$(Build.BuildNumber).xml'
-  
+
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
@@ -25,7 +25,7 @@ steps:
     testRunner: NUnit
     searchFolder: '$(Common.TestResultsDirectory)'
 
-- powershell: Invoke-Build -Configuration 'Production' -Task Clean, CopyModuleFiles, PublishModule
+- powershell: Invoke-Build -Configuration 'Production' -Task Clean, UpdateHelp, CopyModuleFiles, PublishModule
   displayName: 'Publish PowerShell Module'
   env:
     psgallery: $(NugetAPIKey)
