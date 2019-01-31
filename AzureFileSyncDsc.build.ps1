@@ -110,5 +110,5 @@ task Clean {
 #endregion
 
 #region Default Task. Runs Clean, Test, CopyModuleFiles Tasks
-task . Clean, Test, CopyModuleFiles, PublishModule
+task . Clean, UpdateHelp, Test, CopyModuleFiles, PublishModule
 #endregion
