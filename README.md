@@ -29,8 +29,8 @@ If you would like to contribute to this repository, please read the [contributin
 
 ## Resources
 
-- **AzureFileSyncAgent**: This resource can be used to install and configure the Azure File Sync agent.
-- **AzureFileSyncServerEndpoint**: This resource can be used to create an Azure File Sync Server Endpoint in Azure.
+- **[AzureFileSyncAgent](https://github.com/janegilring/AzureFileSyncDsc/tree/master/DSCResources/AzureFileSyncAgent)**: This resource can be used to install and configure the Azure File Sync agent.
+- **[AzureFileSyncServerEndpoint](https://github.com/janegilring/AzureFileSyncDsc/tree/master/DSCResources/AzureFileSyncServerEndpoint)**: This resource can be used to create an Azure File Sync Server Endpoint in Azure.
 
 ### AzureFileSyncAgent
 
