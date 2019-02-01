@@ -16,6 +16,8 @@ no contributions should be made directly to this branch.
 
 ### dev
 
+[![Build Status](https://dev.azure.com/janegilring/AzureFileSyncDsc/_apis/build/status/janegilring.AzureFileSyncDsc?branchName=dev)](https://dev.azure.com/janegilring/AzureFileSyncDsc/_build/latest?definitionId=3?branchName=dev)
+
 This is the development branch
 to which contributions should be proposed by contributors as pull requests.
 This development branch will periodically be merged to the master branch,
@@ -27,8 +29,8 @@ If you would like to contribute to this repository, please read the [contributin
 
 ## Resources
 
-- **AzureFileSyncAgent**: This resource can be used to install and configure the Azure File Sync agent.
-- **AzureFileSyncServerEndpoint**: This resource can be used to create an Azure File Sync Server Endpoint in Azure.
+- **[AzureFileSyncAgent](https://github.com/janegilring/AzureFileSyncDsc/tree/master/DSCResources/AzureFileSyncAgent)**: This resource can be used to install and configure the Azure File Sync agent.
+- **[AzureFileSyncServerEndpoint](https://github.com/janegilring/AzureFileSyncDsc/tree/master/DSCResources/AzureFileSyncServerEndpoint)**: This resource can be used to create an Azure File Sync Server Endpoint in Azure.
 
 ### AzureFileSyncAgent
 
