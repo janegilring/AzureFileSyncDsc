@@ -9,6 +9,7 @@ This project has adopted [this code of conduct](CODE_OF_CONDUCT.md).
 ### master
 
 [![Build Status](https://dev.azure.com/janegilring/AzureFileSyncDsc/_apis/build/status/janegilring.AzureFileSyncDsc?branchName=master)](https://dev.azure.com/janegilring/AzureFileSyncDsc/_build/latest?definitionId=3?branchName=master)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/AzureFileSyncDsc.svg)](https://www.powershellgallery.com/packages/AzureFileSyncDsc)
 
 This is the branch containing the latest release -
 no contributions should be made directly to this branch.
