@@ -94,9 +94,9 @@ task PublishModule -If ($Configuration -eq 'Production') {
 
             Write-Output "Commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
 
-        Publish-Module @params
+             Publish-Module @params
 
-        Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
+            Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
 
         } else {
 
