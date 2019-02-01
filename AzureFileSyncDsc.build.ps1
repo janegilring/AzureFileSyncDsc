@@ -89,8 +89,21 @@ task PublishModule -If ($Configuration -eq 'Production') {
             NuGetApiKey = $env:psgallery
             ErrorAction = 'Stop'
         }
-        Publish-Module @params
-        Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
+
+        if ($env:Build_SOURCEVERSIONMESSAGE -match '!deploy') {
+
+            Write-Output "Commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
+
+             Publish-Module @params
+
+            Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
+
+        } else {
+
+            Write-Output "Commit message does not contain !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - skipping module publishing"
+
+        }
+
     }
     Catch {
         throw $_
