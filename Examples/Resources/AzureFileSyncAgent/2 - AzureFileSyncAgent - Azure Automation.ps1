@@ -1,8 +1,10 @@
 Configuration HybridFileServer
 {
-    param (
-        $AzureCredential = (Get-Credential)
-    )
+    $FileSyncPackageLocalPath = "C:\Windows\Temp\StorageSyncAgent.msi"
+    $AzureFileSyncSubscriptionId = Get-AutomationVariable -Name "AzureFileSyncSubscriptionId"
+    $AzureFileSyncResourceGroup = Get-AutomationVariable -Name "AzureFileSyncResourceGroup"
+    $AzureFileSyncInstanceName = Get-AutomationVariable -Name "AzureFileSyncInstanceName"
+    $AzureCredential = Get-AutomationPSCredential -Name "AzureFileSyncNodeRegistration"
 
     Import-DscResource -ModuleName xPSDesiredStateConfiguration -ModuleVersion 8.4.0.0
     Import-DscResource -ModuleName PSDesiredStateConfiguration
@@ -10,7 +12,7 @@ Configuration HybridFileServer
     Import-DscResource -ModuleName AzureFileSyncAgentDsc -ModuleVersion 1.1.5
     Import-DscResource -ModuleName StorageDsc -ModuleVersion 4.4.0.0
 
-    Node FS01 {
+    Node $AllNodes.Where{$PSItem.NodeType -eq 'HybridFileServer'}.NodeName {
 
         Service FileSyncService
         {
@@ -21,12 +23,12 @@ Configuration HybridFileServer
 
         xRemoteFile FileSyncPackage {
             Uri = "https://download.microsoft.com/download/1/8/D/18DC8184-E7E2-45EF-823F-F8A36B9FF240/StorageSyncAgent_V4_WS2019.msi"
-            DestinationPath = "C:\Windows\Temp\StorageSyncAgent.msi"
+            DestinationPath = $FileSyncPackageLocalPath
         }
 
         Package FileSync {
             Ensure = "Present"
-            Path  = "C:\Windows\Temp\StorageSyncAgent.msi"
+            Path  = $FileSyncPackageLocalPath
             Name = "Storage Sync Agent"
             ProductId = "F5EA481D-EECC-4AA8-B62D-108001DA2462"
             Arguments = '/quiet'
@@ -45,13 +47,15 @@ Configuration HybridFileServer
 
         AzureFileSyncAgent Registration {
 
-            AzureSubscriptionId = 'c0fda861-1234-5678-9ede-fa1908101500'
-            AzureFileSyncResourceGroup = 'File-Sync-Rg'
-            AzureFileSyncInstanceName = 'FileSync01'
+            AzureSubscriptionId = $AzureFileSyncSubscriptionId
+            AzureFileSyncResourceGroup = $AzureFileSyncResourceGroup
+            AzureFileSyncInstanceName = $AzureFileSyncInstanceName
             AzureCredential = $AzureCredential
             DependsOn = '[Service]FileSyncService'
 
         }
+
+        if ($NodeName -like "BranchFS*") {
 
         WaitForDisk Disk1
         {
@@ -79,17 +83,19 @@ Configuration HybridFileServer
 
         AzureFileSyncServerEndpoint DemoData {
 
-            AzureSubscriptionId = 'c0fda861-1234-5678-9ede-fa1908101500'
-            AzureFileSyncResourceGroup = 'File-Sync-Rg'
-            AzureFileSyncInstanceName = 'FileSync01'
-            AzureFileSyncGroup = 'FileServers'
+            AzureSubscriptionId = $AzureFileSyncSubscriptionId
+            AzureFileSyncResourceGroup = $AzureFileSyncResourceGroup
+            AzureFileSyncInstanceName = $AzureFileSyncInstanceName
+            AzureFileSyncGroup = $node.AzureFileSyncGroup
             AzureCredential = $AzureCredential
-            ServerLocalPath = "D:\NICDemoData"
-            CloudTiering = $true
-            TierFilesOlderThanDays = '365'
+            ServerLocalPath = $Node.AzureFileSyncServerEndpointLocalPath
+            CloudTiering = $node.AzureFileSyncCloudTiering
+            TierFilesOlderThanDays = $node.AzureFileSyncTierFilesOlderThanDays
             DependsOn = '[File]DirectoryDemoData'
 
         }
+
+      }
 
     }
 }
