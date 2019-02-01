@@ -44,6 +44,7 @@ This resource can be used to install and configure the Azure File Sync agent on 
 #### AzureFileSyncAgent Examples
 
 - [Install Azure File Sync Agent](https://github.com/janegilring/AzureFileSyncDsc/blob/master/Examples/Resources/AzureFileSyncAgent/1%20-%20AzureFileSyncAgent.ps1)
+- [Install Azure File Sync Agent (Azure Automation DSC)](https://github.com/janegilring/AzureFileSyncDsc/blob/master/Examples/Resources/AzureFileSyncAgent/2%20-%20AzureFileSyncAgent%20-%20Azure%20Automation.ps1)
 
 ### AzureFileSyncServerEndpoint
 
@@ -62,3 +63,4 @@ This resource can be used to create an Azure File Sync Server Endpoint in Azure.
 #### AzureFileSyncServerEndpoint Examples
 
 - [Register Azure FileSync Server Endpoint](https://github.com/janegilring/AzureFileSyncDsc/blob/master/Examples/Resources/AzureFileSyncServerEndpoint/1%20-%20AzureFileSyncServerEndpoint.ps1)
+- [Register Azure FileSync Server Endpoint (Azure Automation DSC)](https://github.com/janegilring/AzureFileSyncDsc/blob/master/Examples/Resources/AzureFileSyncServerEndpoint/2%20-%20AzureFileSyncServerEndpoint%20-%20Azure%20Automation.ps1)
