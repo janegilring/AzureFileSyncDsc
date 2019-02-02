@@ -9,7 +9,7 @@ Configuration HybridFileServer
     Import-DscResource -ModuleName xPSDesiredStateConfiguration -ModuleVersion 8.4.0.0
     Import-DscResource -ModuleName PSDesiredStateConfiguration
     Import-DscResource -ModuleName PackageManagement -ModuleVersion 1.3.1
-    Import-DscResource -ModuleName AzureFileSyncDsc -ModuleVersion 1.0.0.2
+    Import-DscResource -ModuleName AzureFileSyncDsc -ModuleVersion 1.0.0.3
     Import-DscResource -ModuleName StorageDsc -ModuleVersion 4.4.0.0
 
     Node 'HybridFileServer' {
