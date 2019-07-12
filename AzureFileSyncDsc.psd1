@@ -1,6 +1,6 @@
 @{
     # Version number of this module.
-    moduleVersion     = '1.0.0.2'
+    moduleVersion     = '1.0.0.4'
 
     # ID used to uniquely identify this module.
     GUID              = '70b9e862-92a5-496e-a44a-c5f3c77eaa36'
@@ -15,7 +15,7 @@
     Copyright = '(c) 2019 Jan Egil Ring. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = 'DSC Resource Module for installing and configuring Azure File Sync agent'
+    Description       = 'DSC Resource Rodule for managing different aspects within the Azure File Sync service, such as installing and registering agents, as well as adding server endpoints.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '4.0'
