@@ -211,7 +211,20 @@ function Test-TargetResource {
 
             if (@($AzureStorageSyncServerEndpoint).Count -eq 1) {
 
-                $true
+                $LocalServerCurrentRegistration = Get-Item HKLM:\SOFTWARE\Microsoft\Azure\StorageSync\ServerRegistration | where Property -like ServerRegistration*
+
+                if ($LocalServerCurrentRegistration) {
+
+                    Write-Verbose "Local server is already registered - skipping registration"
+                    $true
+
+                } else {
+
+                    Write-Verbose "Local server is not registered, adding even though existing server is present"
+                    $false
+
+                }
+
 
             }
             else {
