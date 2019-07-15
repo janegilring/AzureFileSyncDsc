@@ -1,6 +1,6 @@
 @{
     # Version number of this module.
-    moduleVersion     = '1.0.0.4'
+    moduleVersion     = '1.0.0.5'
 
     # ID used to uniquely identify this module.
     GUID              = '70b9e862-92a5-496e-a44a-c5f3c77eaa36'
@@ -44,7 +44,7 @@
             ProjectUri   = 'https://github.com/janegilring/AzureFileSyncDsc'
 
             # ReleaseNotes of this module
-            ReleaseNotes = ''
+            ReleaseNotes = '1.0.0.4 - Fix for "The endpoint is not registered if an old server with the same name is already registered."'
 
         } # End of PSData hashtable
 
