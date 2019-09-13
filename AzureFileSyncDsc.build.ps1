@@ -24,7 +24,7 @@ task CopyModuleFiles {
     # Copy Module Files to Output Folder
     if (-not (Test-Path .\output\AzureFileSyncDsc)) {
 
-        $null = New-Item -Path .\output\AzureFileSyncDsc -ItemType Directory
+        $OutputPath = New-Item -Path .\output\AzureFileSyncDsc -ItemType Directory
 
     }
 
@@ -82,6 +82,16 @@ task UpdateManifest {
 
 #region Task to Publish Module to PowerShell Gallery
 
+'pwd'
+dir $pwd
+'OutputPath'
+dir $OutputPath
+dir .\output\
+dir .\output\AzureFileSyncDsc
+throw testing
+
+task PublishModule {
+
 if (
     $env:Build_SourceBranchName -eq "master" -and
     $env:Build_SourceVersionMessage -match '!deploy'
@@ -106,6 +116,7 @@ else {
     "`t* You are committing to the master branch (Current: $env:Build_SourceBranchName) `n" +
     "`t* Your commit message includes !deploy (Current: $env:Build_SourceVersionMessage)" |
         Write-Host
+}
 }
 
 #endregion
