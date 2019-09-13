@@ -24,7 +24,7 @@ task CopyModuleFiles {
     # Copy Module Files to Output Folder
     if (-not (Test-Path .\output\AzureFileSyncDsc)) {
 
-        $OutputPath = New-Item -Path .\output\AzureFileSyncDsc -ItemType Directory
+        $null = New-Item -Path .\output\AzureFileSyncDsc -ItemType Directory
 
     }
 
@@ -84,8 +84,6 @@ task UpdateManifest {
 
 'pwd'
 dir $pwd
-'OutputPath'
-dir $OutputPath
 dir .\output\
 dir .\output\AzureFileSyncDsc
 throw testing
