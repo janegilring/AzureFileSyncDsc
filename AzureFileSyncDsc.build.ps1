@@ -88,7 +88,7 @@ if (
 ) {
 
     $params = @{
-        Path        = .\output\AzureFileSyncDsc
+        Path        = '.\output\AzureFileSyncDsc'
         NuGetApiKey = $env:psgallery
         ErrorAction = 'Stop'
     }
