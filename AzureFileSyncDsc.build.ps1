@@ -30,7 +30,7 @@ task CopyModuleFiles {
 
     Copy-Item -Path '.\en-US\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force
     Copy-Item -Path '.\DSCResources\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force
-    Copy-Item -Path '.\Examples\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force
+    #Copy-Item -Path '.\Examples\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force # Removed due to breaking automated analysis in PowerShell Gallery
 
     #Copy Module Manifest files
     Copy-Item -Path @(
