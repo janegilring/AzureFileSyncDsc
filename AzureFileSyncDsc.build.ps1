@@ -86,17 +86,19 @@ if (
     $env:Build_SourceBranchName -eq "master" -and
     $env:Build_SourceVersionMessage -match '!deploy'
 ) {
-    Deploy Module {
-        By PSGalleryModule {
-            FromSource ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
-            To PSGallery
-            WithOptions @{
-                ApiKey = $env:psgallery
-            }
-        }
+
+    params = @{
+        Path        = ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
+        NuGetApiKey = $env:psgallery
+        ErrorAction = 'Stop'
     }
 
-    Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
+
+        Write-Output "Branch is master and commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
+
+        Publish-Module @params
+
+        Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
 
 }
 else {
