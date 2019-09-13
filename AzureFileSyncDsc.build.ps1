@@ -82,32 +82,33 @@ task UpdateManifest {
 
 #region Task to Publish Module to PowerShell Gallery
 task PublishModule -If ($Configuration -eq 'Production') {
-    Try {
-        # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
-        $params = @{
-            Path        = ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
-            NuGetApiKey = $env:psgallery
-            ErrorAction = 'Stop'
-        }
 
-        if ($env:Build_SOURCEVERSIONMESSAGE -match '!deploy') {
+    if (
+                $env:Build_SourceBranchName -eq "master" -and
+                $env:Build_SourceVersionMessage -match '!deploy'
+            ) {
 
-            Write-Output "Commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
+                $params = @{
+                    Path        = ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
+                    NuGetApiKey = $env:psgallery
+                    ErrorAction = 'Stop'
+                }
 
-             Publish-Module @params
 
-            Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
+                    Write-Output "Branch is master and commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
 
-        } else {
+                    Publish-Module @params
 
-            Write-Output "Commit message does not contain !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - skipping module publishing"
+                    Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
 
-        }
+            }
+            else {
+                "Skipping deployment: To deploy, ensure that...`n" +
+                "`t* You are committing to the master branch (Current: $env:Build_SourceBranchName) `n" +
+                "`t* Your commit message includes !deploy (Current: $env:Build_SourceVersionMessage)" |
+                    Write-Host
+            }
 
-    }
-    Catch {
-        throw $_
-    }
 }
 #endregion
 
