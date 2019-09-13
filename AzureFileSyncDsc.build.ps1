@@ -30,7 +30,7 @@ task CopyModuleFiles {
 
     Copy-Item -Path '.\en-US\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force
     Copy-Item -Path '.\DSCResources\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force
-    #Copy-Item -Path '.\Examples\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force # Removed due to breaking automated analysis in PowerShell Gallery
+    Copy-Item -Path '.\Examples\' -Filter *.* -Recurse -Destination .\output\AzureFileSyncDsc -Force
 
     #Copy Module Manifest files
     Copy-Item -Path @(
@@ -81,42 +81,34 @@ task UpdateManifest {
 #endregion
 
 #region Task to Publish Module to PowerShell Gallery
+task PublishModule -If ($Configuration -eq 'Production') {
+    Try {
+        # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
+        $params = @{
+            Path        = ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
+            NuGetApiKey = $env:psgallery
+            ErrorAction = 'Stop'
+        }
 
-'pwd'
-dir $pwd
-dir .\output\
-dir .\output\AzureFileSyncDsc
-throw testing
+        if ($env:Build_SOURCEVERSIONMESSAGE -match '!deploy') {
 
-task PublishModule {
+            Write-Output "Commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
 
-if (
-    $env:Build_SourceBranchName -eq "master" -and
-    $env:Build_SourceVersionMessage -match '!deploy'
-) {
+             Publish-Module @params
 
-    $params = @{
-        Path        = '.\output\AzureFileSyncDsc'
-        NuGetApiKey = $env:psgallery
-        ErrorAction = 'Stop'
+            Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
+
+        } else {
+
+            Write-Output "Commit message does not contain !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - skipping module publishing"
+
+        }
+
     }
-
-
-        Write-Output "Branch is master and commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
-
-        Publish-Module @params
-
-        Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
-
+    Catch {
+        throw $_
+    }
 }
-else {
-    "Skipping deployment: To deploy, ensure that...`n" +
-    "`t* You are committing to the master branch (Current: $env:Build_SourceBranchName) `n" +
-    "`t* Your commit message includes !deploy (Current: $env:Build_SourceVersionMessage)" |
-        Write-Host
-}
-}
-
 #endregion
 
 #region Task clean up Output folder
