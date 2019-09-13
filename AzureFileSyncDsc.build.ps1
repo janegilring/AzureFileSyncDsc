@@ -81,34 +81,31 @@ task UpdateManifest {
 #endregion
 
 #region Task to Publish Module to PowerShell Gallery
-task PublishModule -If ($Configuration -eq 'Production') {
-    Try {
-        # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
-        $params = @{
-            Path        = ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
-            NuGetApiKey = $env:psgallery
-            ErrorAction = 'Stop'
+
+if (
+    $env:Build_SourceBranchName -eq "master" -and
+    $env:Build_SourceVersionMessage -match '!deploy'
+) {
+    Deploy Module {
+        By PSGalleryModule {
+            FromSource ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
+            To PSGallery
+            WithOptions @{
+                ApiKey = $env:psgallery
+            }
         }
-
-        if ($env:Build_SOURCEVERSIONMESSAGE -match '!deploy') {
-
-            Write-Output "Commit message contains !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - publishing module"
-
-             Publish-Module @params
-
-            Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
-
-        } else {
-
-            Write-Output "Commit message does not contain !deploy : $($env:Build_SOURCEVERSIONMESSAGE) - skipping module publishing"
-
-        }
-
     }
-    Catch {
-        throw $_
-    }
+
+    Write-Output -InputObject ('AzureFileSyncDsc module version $newVersion published to the PowerShell Gallery')
+
 }
+else {
+    "Skipping deployment: To deploy, ensure that...`n" +
+    "`t* You are committing to the master branch (Current: $env:Build_SourceBranchName) `n" +
+    "`t* Your commit message includes !deploy (Current: $env:Build_SourceVersionMessage)" |
+        Write-Host
+}
+
 #endregion
 
 #region Task clean up Output folder
