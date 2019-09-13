@@ -87,7 +87,7 @@ if (
     $env:Build_SourceVersionMessage -match '!deploy'
 ) {
 
-    params = @{
+    $params = @{
         Path        = ('{0}\Output\AzureFileSyncDsc' -f $PSScriptRoot )
         NuGetApiKey = $env:psgallery
         ErrorAction = 'Stop'
