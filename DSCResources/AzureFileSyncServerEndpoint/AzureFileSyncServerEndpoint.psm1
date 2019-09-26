@@ -201,11 +201,11 @@ function Test-TargetResource {
 
     if (@($Registered).Count -eq 1) {
 
-        Write-Verbose "Found server with tegistered DisplayName $DisplayName : $($Registered.DisplayName)"
+        Write-Verbose "Found server with registered DisplayName $DisplayName : $($Registered.DisplayName)"
 
         $AzureStorageSyncGroup = Get-AzureRmStorageSyncGroup -ResourceGroupName $AzureFileSyncResourceGroup -StorageSyncServiceName $AzureFileSyncInstanceName
 
-        if (@($AzureStorageSyncGroup).Count -eq 1) {
+        if (@($AzureStorageSyncGroup).Count -ge 1) {
 
             $AzureStorageSyncServerEndpoint = Get-AzureRmStorageSyncServerEndpoint -ResourceGroupName $AzureFileSyncResourceGroup -StorageSyncServiceName $AzureFileSyncInstanceName -SyncGroupName $AzureFileSyncGroup | Select-Object *, @{n = 'ComputerName'; e = {$PSitem.DisplayName.Split('.')[0]}} | Where-Object ComputerName -eq $env:COMPUTERNAME
 
